@@ -25,6 +25,7 @@ public class StepTimer {
 	
 	
 	public void stop(){
+		timer.purge();
 		timer.cancel();
 		running = false;
 	}
@@ -36,6 +37,7 @@ public class StepTimer {
 	
 
 	private void step(){
+		timer.purge();
 		sequencer.step();
 		
 		TimerTask step = new TimerTask() {
