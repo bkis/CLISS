@@ -48,6 +48,14 @@ public class Sequencer {
 	public Track getTrack(String trackID){
 		return tracks.get(trackID);
 	}
+	
+	public void randomizePattern(String trackID, int densityInPercent){
+		boolean[] pattern = new boolean[steps];
+		for (int i = 0; i < pattern.length; i++) {
+			pattern[i] = Math.random() < (float)densityInPercent/100;
+		}
+		tracks.get(trackID).setPattern(pattern);
+	}
 
 	public void setSteps(int steps) {
 		setSteps(steps, false);

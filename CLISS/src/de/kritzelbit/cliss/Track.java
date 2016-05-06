@@ -98,7 +98,7 @@ public class Track {
 		
 		for (int i = 0; i < steps.length; i++)
 			if (steps[i] == true)
-				s += "X";
+				s += "|";
 			else
 				s += ".";
 		s += "]\tFile: " + sound.getSoundFile().getName();

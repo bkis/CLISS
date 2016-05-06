@@ -55,7 +55,7 @@ public class StepTimer {
 
 	public void setBPM(float bpm) {
 		if (bpm > 1 && bpm < 1000){
-			this.stepDelay = (int) (60000 / bpm);
+			this.stepDelay = (int) (60000 / (bpm*4));
 		}
 	}
 
