@@ -9,11 +9,14 @@ public class StepTimer {
 	private Sequencer sequencer;
 	private boolean running;
 	private int stepDelay;
+	private int swingOffset;
+	private boolean swingNext;
 	
 	
 	public StepTimer(Sequencer seq){
 		this.sequencer = seq;
 		setBPM(120);
+		swingNext = true;
 	}
 	
 	
@@ -46,7 +49,8 @@ public class StepTimer {
 			}
 		};
 		
-		timer.schedule(step, stepDelay);
+		timer.schedule(step, stepDelay + (swingNext ? swingOffset : -swingOffset));
+		swingNext = !swingNext;
 	}
 	
 	
@@ -59,6 +63,13 @@ public class StepTimer {
 		if (bpm > 1 && bpm < 1000){
 			this.stepDelay = (int) (60000 / (bpm*4));
 		}
+		//update swing offset
+		setSwing(sequencer.getSwing());
+	}
+	
+	
+	public void setSwing(int swing){
+		swingOffset = (swing-1);
 	}
 
 	

@@ -16,6 +16,7 @@ public class Sequencer {
 	private Map<String, Track> tracks;
 	private int steps;
 	private int step;
+	private int swing;
 
 	public static Sequencer getInstance() {
 		if (instance == null) {
@@ -25,11 +26,12 @@ public class Sequencer {
 	}
 
 	private Sequencer(int beats) {
-		this.timer = new StepTimer(this);
-		this.player = SoundPlayer.getInstance();
-		this.tracks = new HashMap<String, Track>();
 		this.steps = beats;
 		this.step = 1;
+		this.swing = 1;
+		this.tracks = new HashMap<String, Track>();
+		this.timer = new StepTimer(this);
+		this.player = SoundPlayer.getInstance();
 	}
 	
 	public void addTrack(String trackID, File soundFile) {
@@ -103,6 +105,32 @@ public class Sequencer {
 	
 	public void setBPM(int bpm) {
 		timer.setBPM(bpm);
+	}
+	
+	
+	public void setSwing(int swing){
+		if (swing < 1) swing = 1;
+		if (swing > 100) swing = 100;
+		this.swing = swing;
+		timer.setSwing(swing);
+	}
+	
+	
+	public int getSwing(){
+		return swing;
+	}
+
+	
+	public void setTrack(String id, String pattern) {
+		if (tracks.get(id) != null){
+			boolean[] pat = new boolean[pattern.length()];
+			for (int i = 0; i < pat.length; i++) {
+				pat[i] = pattern.charAt(i) != '.';
+			}
+			tracks.get(id).setPattern(pat);
+		} else {
+			System.err.println("[ERROR]\tunknown track-ID \"" + id + "\"");
+		}
 	}
 
 }

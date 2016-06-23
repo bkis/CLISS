@@ -10,6 +10,7 @@ public class Main {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, InterruptedException {
 		Sequencer seq = Sequencer.getInstance();
+		CLInterpreter clInterp = new CLInterpreter(seq);
 		seq.addTrack("BD", new File("bd.wav"), new boolean[]{true, false, false, false});
 		seq.addTrack("HH", new File("hh.wav"), new boolean[]{true, false, true, false, true});
 		seq.addTrack("SD", new File("sd.wav"), new boolean[]{false, false, false, false, true, false, false, false});
@@ -19,12 +20,7 @@ public class Main {
 		Scanner input = new Scanner(System.in);
 		String line;
 		while (!(line = input.nextLine()).equals("exit")){
-			if (line.startsWith("bpm"))
-				seq.setBPM(Integer.parseInt(line.replaceAll("\\D", "")));
-			if (line.startsWith("rnd"))
-				seq.randomizePattern(line.split(" ")[1], Integer.parseInt(line.split(" ")[2]));
-			if (line.startsWith("steps"))
-				seq.setSteps(Integer.parseInt(line.split(" ")[1]));
+			clInterp.processCommand(line);
 		}
 		input.close();
 		seq.stop();

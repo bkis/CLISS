@@ -94,14 +94,17 @@ public class Track {
 	
 	@Override
 	public String toString() {
-		String s = id + "\t[";
+		String s = id + "\t";
 		
-		for (int i = 0; i < steps.length; i++)
-			if (steps[i] == true)
-				s += "|";
-			else
+		for (int i = 0; i < steps.length; i++){
+			if (steps[i] == true){
+				s += "x";
+			} else {
 				s += ".";
-		s += "]\tFile: " + sound.getSoundFile().getName();
+			}
+		}
+		
+		s += "\t" + sound.getSoundFile().getName();
 		
 		return s;
 	}
